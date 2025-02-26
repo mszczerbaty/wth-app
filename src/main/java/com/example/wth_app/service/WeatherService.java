@@ -24,7 +24,7 @@ public class WeatherService {
 
     public WeatherData fetchAndSaveWeather() {
         WeatherResponse response = weatherClient.getWeather(city, apiKey);
-        WeatherData data = new WeatherData(null, response.getName(), response.getMain().getTemp(), LocalDateTime.now());
+        WeatherData data = new WeatherData(null, response.name(), response.main().temp(), LocalDateTime.now());
         return weatherRepository.save(data);
     }
 }
