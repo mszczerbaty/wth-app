@@ -33,4 +33,12 @@ public class WeatherService {
         );
         weatherRepository.save(weatherData);
     }
+
+    public String getWeatherReport(String city) {
+        GeoLocation location = weatherClient.getCoordinates(city);
+        WeatherResponse weather = weatherClient.getWeather(location.lat(), location.lon(), "en");
+
+        return String.format("Weather update for %s:\nTemperature: %.2f°C\nHumidity: %d%%\nCondition: %s",
+                city, weather.main().temp(), weather.main().humidity(), weather.weather().getFirst().description());
+    }
 }
