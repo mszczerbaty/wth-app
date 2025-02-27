@@ -27,4 +27,8 @@ public class WeatherService {
         WeatherData data = new WeatherData(null, response.name(), response.main().temp(), LocalDateTime.now());
         return weatherRepository.save(data);
     }
+
+    public WeatherResponse getWeather(double latitude, double longitude, String lang) {
+        return weatherClient.getWeather(latitude, longitude, lang);
+    }
 }

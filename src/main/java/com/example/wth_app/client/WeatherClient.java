@@ -6,15 +6,19 @@ import com.example.wth_app.error.ExternalServiceException;
 import com.example.wth_app.error.UnauthorizedException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class WeatherClient {
+    @Value("${weather.api.key}")
+    private String apiKey;
     private final RestTemplate restTemplate;
 
     @Cacheable(value = "weather", key = "#city", unless = "#result == null")
@@ -32,5 +36,18 @@ public class WeatherClient {
         } catch (Exception e) {
             throw new ExternalServiceException("Unexpected error: " + e.getMessage());
         }
+    }
+
+    public WeatherResponse getWeather(double latitude, double longitude, String lang) {
+        String url = UriComponentsBuilder.fromUriString("https://api.openweathermap.org/data/2.5/weather")
+                .queryParam("lat", latitude)
+                .queryParam("lon", longitude)
+                .queryParam("appid", apiKey)
+                .queryParam("units", "metric")
+                .queryParam("lang", lang)
+                .toUriString();
+        log.info("Retrieving weather data for city: {}", url);
+
+        return restTemplate.getForObject(url, WeatherResponse.class);
     }
 }
