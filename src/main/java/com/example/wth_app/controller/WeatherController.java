@@ -24,4 +24,11 @@ public class WeatherController {
         return ResponseEntity.ok(weatherResponse);
     }
 
+    @GetMapping(path = "/by-city")
+    public ResponseEntity<WeatherResponse> getWeatherByCity(
+            @RequestParam String city,
+            @RequestParam(defaultValue = "en") String lang) {
+        WeatherResponse weatherResponse = weatherService.getWeatherByCity(city, lang);
+        return ResponseEntity.ok(weatherResponse);
+    }
 }

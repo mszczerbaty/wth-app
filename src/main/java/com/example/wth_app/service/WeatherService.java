@@ -1,6 +1,7 @@
 package com.example.wth_app.service;
 
 import com.example.wth_app.client.WeatherClient;
+import com.example.wth_app.dto.GeoLocation;
 import com.example.wth_app.dto.WeatherResponse;
 import com.example.wth_app.model.WeatherData;
 import com.example.wth_app.repository.WeatherRepository;
@@ -30,5 +31,10 @@ public class WeatherService {
 
     public WeatherResponse getWeather(double latitude, double longitude, String lang) {
         return weatherClient.getWeather(latitude, longitude, lang);
+    }
+
+    public WeatherResponse getWeatherByCity(String city, String lang) {
+        GeoLocation geoLocation = weatherClient.getCoordinates(city);
+        return getWeather(geoLocation.lat(), geoLocation.lon(), lang);
     }
 }
