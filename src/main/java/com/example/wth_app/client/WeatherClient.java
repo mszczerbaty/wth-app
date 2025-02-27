@@ -20,9 +20,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class WeatherClient {
     @Value("${weather.api.key}")
     private String apiKey;
+    @Value("${geo.api.url}")
+    private String geoApiUrl;
+    @Value("${weather.api.url}")
+    private String weatherApiUrl;
     private final RestTemplate restTemplate;
-    private static final String GEO_API_URL = "http://api.openweathermap.org/geo/1.0/direct";
-    private static final String WEATHER_API_URL = "https://api.openweathermap.org/data/2.5/weather";
 
 
     @Cacheable(value = "weather", key = "#city", unless = "#result == null")
@@ -42,8 +44,9 @@ public class WeatherClient {
         }
     }
 
+    @Cacheable(value = "weatherByCoords", key = "#longitude.toString() + #latitude.toString()", unless = "#result == null")
     public WeatherResponse getWeather(double latitude, double longitude, String lang) {
-        String url = UriComponentsBuilder.fromUriString(WEATHER_API_URL)
+        String url = UriComponentsBuilder.fromUriString(weatherApiUrl)
                 .queryParam("lat", latitude)
                 .queryParam("lon", longitude)
                 .queryParam("appid", apiKey)
@@ -55,8 +58,9 @@ public class WeatherClient {
         return restTemplate.getForObject(url, WeatherResponse.class);
     }
 
+    @Cacheable(value = "weatherByCity", key = "#city", unless = "#result == null")
     public GeoLocation getCoordinates(String city) {
-        String url = UriComponentsBuilder.fromUriString(GEO_API_URL)
+        String url = UriComponentsBuilder.fromUriString(geoApiUrl)
                 .queryParam("q", city)
                 .queryParam("limit", 1)
                 .queryParam("appid", apiKey)
