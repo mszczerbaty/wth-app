@@ -1,6 +1,7 @@
 package com.example.wth_app.controller;
 
 import com.example.wth_app.dto.WeatherResponse;
+import com.example.wth_app.dto.WeatherResponseDTO;
 import com.example.wth_app.service.WeatherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +26,10 @@ public class WeatherController {
     }
 
     @GetMapping(path = "/by-city")
-    public ResponseEntity<WeatherResponse> getWeatherByCity(
+    public ResponseEntity<WeatherResponseDTO> getWeatherByCity(
             @RequestParam String city,
             @RequestParam(defaultValue = "en") String lang) {
-        WeatherResponse weatherResponse = weatherService.getWeatherByCity(city, lang);
-        return ResponseEntity.ok(weatherResponse);
+        WeatherResponseDTO weatherResponseDTO = weatherService.getWeatherByCity(city, lang);
+        return ResponseEntity.ok(weatherResponseDTO);
     }
 }

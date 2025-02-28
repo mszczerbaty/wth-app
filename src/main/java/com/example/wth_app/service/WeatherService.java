@@ -3,6 +3,7 @@ package com.example.wth_app.service;
 import com.example.wth_app.client.WeatherClient;
 import com.example.wth_app.dto.GeoLocation;
 import com.example.wth_app.dto.WeatherResponse;
+import com.example.wth_app.dto.WeatherResponseDTO;
 import com.example.wth_app.model.WeatherData;
 import com.example.wth_app.repository.WeatherRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,18 +19,18 @@ public class WeatherService {
         return weatherClient.getWeather(latitude, longitude, lang);
     }
 
-    public WeatherResponse getWeatherByCity(String city, String lang) {
+    public WeatherResponseDTO getWeatherByCity(String city, String lang) {
         GeoLocation geoLocation = weatherClient.getCoordinates(city);
-        return getWeather(geoLocation.lat(), geoLocation.lon(), lang);
+        return WeatherResponseDTO.from(getWeather(geoLocation.lat(), geoLocation.lon(), lang));
     }
 
     public void saveWeatherData(String city) {
-        WeatherResponse weather = getWeatherByCity(city, "en");
+        WeatherResponseDTO weather = getWeatherByCity(city, "en");
         WeatherData weatherData = new WeatherData(
                 city,
-                weather.main().temp(),
-                weather.main().humidity(),
-                weather.weather().getFirst().description()
+                weather.temperature(),
+                weather.humidity(),
+                weather.description()
         );
         weatherRepository.save(weatherData);
     }
