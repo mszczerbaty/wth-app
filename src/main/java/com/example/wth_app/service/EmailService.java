@@ -25,7 +25,7 @@ public class EmailService {
                     .from(fromEmail)
                     .to(to)
                     .subject(subject)
-                    .text(body)
+                    .html(body)
                     .build();
 
             MessageResponse response = mailgunMessagesApi.sendMessage(domain, message);

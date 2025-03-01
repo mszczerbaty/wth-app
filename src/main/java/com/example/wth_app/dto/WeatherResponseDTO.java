@@ -16,7 +16,7 @@ public record WeatherResponseDTO(
         int pressure,
         String description,
         double windSpeed,
-        int windDirection,
+        String windDirection,
         Double windGust,
         int cloudiness,
         Double rainLastHour,
@@ -34,11 +34,17 @@ public record WeatherResponseDTO(
                 response.main().pressure(),
                 response.weather().getFirst().description(),
                 response.wind().speed(),
-                response.wind().deg(),
+                getWindDirection(response.wind().deg()),
                 response.wind().gust(),
                 response.clouds().all(),
                 response.rain() != null ? response.rain().oneHour() : null,
                 LocalDateTime.now()
         );
+    }
+
+    public static String getWindDirection(int degrees) {
+        String[] directions = {"N", "NE", "E", "SE",
+                "S", "SW", "W", "NW", "N"};
+        return directions[(int) Math.round(((double) degrees % 360) / 45)];
     }
 }

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Status</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #3498db;
+        }
+
+        .weather-info {
+            margin: 10px 0;
+            padding: 10px;
+            background: #ecf0f1;
+            border-radius: 5px;
+        }
+
+        .footer {
+            font-size: 12px;
+            color: #777;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2 class="weather-info">🌦 Weather status for <span th:text="${city}"></span></h2>
+    <p>📍 Location: <strong th:text="${city} + ', ' + ${country}"></strong></p>
+    <p>🌡 Temperature: <strong th:text="${temperature} + '°C'"></strong> (Feels like <span
+            th:text="${feelsLike} + '°C'"></span>)</p>
+    <p>💧 Humidity: <strong th:text="${humidity} + '%'"></strong></p>
+    <p>🌬 Wind: <strong th:text="${windSpeed} + ' m/s'"></strong>, Direction: <strong
+            th:text="${windDirection}"></strong></p>
+    <p>☁ Cloudiness: <strong th:text="${cloudiness} + '%'"></strong></p>
+    <p>🌧 Rain (Last Hour): <strong th:text="${rainLastHour} != null ? ${rainLastHour} + ' mm' : 'No Rain'"></strong></p>
+    <p>📝 Summary: <strong th:text="${description}"></strong></p>
+    <div class="footer">
+        <p>Weather data provided by OpenWeather API</p>
+        <p>Sent at <span th:text="${timestamp}"></span></p>
+    </div>
+</div>
+</body>
+</html>

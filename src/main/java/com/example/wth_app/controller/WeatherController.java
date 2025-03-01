@@ -32,4 +32,13 @@ public class WeatherController {
         WeatherResponseDTO weatherResponseDTO = weatherService.getWeatherByCity(city, lang);
         return ResponseEntity.ok(weatherResponseDTO);
     }
+
+    @GetMapping(path = "/status-by-city")
+    public ResponseEntity<String> getWeatherStatusByCity(
+            @RequestParam String city,
+            @RequestParam(defaultValue = "en") String lang) {
+        String weatherHtml = weatherService.getHtmlWeatherByCity(city, lang);
+        return ResponseEntity.ok(weatherHtml);
+    }
+
 }
