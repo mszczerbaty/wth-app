@@ -1,7 +1,9 @@
-package com.example.wth_app.service;
+package com.example.wth_app.service.webflux;
 
 
 import com.example.wth_app.model.WeatherSubscription;
+import com.example.wth_app.service.EmailService;
+import com.example.wth_app.service.WeatherSubscriptionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -13,9 +15,10 @@ import java.util.List;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class WeatherScheduler {
-    private final WeatherService weatherService;
+public class WebfluxWeatherSchedulerImpl {
+    private final WebfluxWeatherServiceImpl weatherService;
     private final WeatherSubscriptionService subscriptionService;
+    private final EmailService emailService;
 
     @Scheduled(fixedRate = 3600000)
     public void fetchAndStoreWeather() {
@@ -27,11 +30,16 @@ public class WeatherScheduler {
     public void sendWeatherEmails() {
         List<WeatherSubscription> subscriptions = subscriptionService.getAllSubscriptions();
 
-        for (WeatherSubscription sub : subscriptions) {
-            String weatherReport = weatherService.getWeatherReport(sub.getCity());
+        subscriptions.forEach(sub -> {
             String subject = "Weather Update for " + sub.getCity();
-            log.info("{}\n{}", weatherReport, subject);
-        }
+
+            weatherService.getWeatherReport(sub.getCity())
+                    .doOnNext(report -> {
+                        log.info("{}\n{}", report, subject);
+                        emailService.sendWeatherEmail(sub.getEmail(), subject, report);
+                    })
+                    .subscribe();
+        });
     }
 
 }

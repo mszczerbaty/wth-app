@@ -1,6 +1,6 @@
-package com.example.wth_app.service;
+package com.example.wth_app.service.web;
 
-import com.example.wth_app.client.WeatherClient;
+import com.example.wth_app.client.web.WeatherClient;
 import com.example.wth_app.dto.GeoLocation;
 import com.example.wth_app.dto.WeatherResponse;
 import com.example.wth_app.dto.WeatherResponseDTO;
@@ -13,7 +13,7 @@ import org.thymeleaf.context.Context;
 
 @Service
 @RequiredArgsConstructor
-public class WeatherService {
+public class WeatherServiceImpl {
     private final WeatherClient weatherClient;
     private final WeatherRepository weatherRepository;
     private final TemplateEngine templateEngine;

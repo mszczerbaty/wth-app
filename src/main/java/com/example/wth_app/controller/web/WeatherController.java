@@ -1,8 +1,8 @@
-package com.example.wth_app.controller;
+package com.example.wth_app.controller.web;
 
 import com.example.wth_app.dto.WeatherResponse;
 import com.example.wth_app.dto.WeatherResponseDTO;
-import com.example.wth_app.service.WeatherService;
+import com.example.wth_app.service.web.WeatherServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/weather")
 @RequiredArgsConstructor
 public class WeatherController {
-    private final WeatherService weatherService;
+    private final WeatherServiceImpl weatherService;
 
     @GetMapping(path = "/current")
     public ResponseEntity<WeatherResponse> getCurrentWeather(

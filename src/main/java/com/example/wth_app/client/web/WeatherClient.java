@@ -1,4 +1,4 @@
-package com.example.wth_app.client;
+package com.example.wth_app.client.web;
 
 import com.example.wth_app.dto.GeoLocation;
 import com.example.wth_app.dto.WeatherResponse;
