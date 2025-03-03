@@ -2,7 +2,7 @@ package com.example.wth_app.controller.webflux;
 
 import com.example.wth_app.dto.WeatherResponse;
 import com.example.wth_app.dto.WeatherResponseDTO;
-import com.example.wth_app.service.webflux.WebfluxWeatherServiceImpl;
+import com.example.wth_app.service.webflux.WebfluxWeatherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono;
 @RequestMapping(path = "/weather/v2")
 @RequiredArgsConstructor
 public class WebfluxWeatherController {
-    private final WebfluxWeatherServiceImpl weatherService;
+    private final WebfluxWeatherService weatherService;
 
     @GetMapping(path = "/current")
     public Mono<WeatherResponse> getCurrentWeather(

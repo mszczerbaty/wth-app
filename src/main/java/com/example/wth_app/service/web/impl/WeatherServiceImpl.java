@@ -1,4 +1,4 @@
-package com.example.wth_app.service.web;
+package com.example.wth_app.service.web.impl;
 
 import com.example.wth_app.client.web.WeatherClient;
 import com.example.wth_app.dto.GeoLocation;
@@ -6,6 +6,7 @@ import com.example.wth_app.dto.WeatherResponse;
 import com.example.wth_app.dto.WeatherResponseDTO;
 import com.example.wth_app.model.WeatherData;
 import com.example.wth_app.repository.WeatherRepository;
+import com.example.wth_app.service.web.WeatherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
@@ -13,7 +14,7 @@ import org.thymeleaf.context.Context;
 
 @Service
 @RequiredArgsConstructor
-public class WeatherServiceImpl {
+public class WeatherServiceImpl implements WeatherService {
     private final WeatherClient weatherClient;
     private final WeatherRepository weatherRepository;
     private final TemplateEngine templateEngine;

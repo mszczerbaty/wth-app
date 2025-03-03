@@ -15,7 +15,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class WeatherSchedulerImpl {
-    private final WeatherServiceImpl weatherService;
+    private final WeatherService weatherService;
     private final WeatherSubscriptionService subscriptionService;
 
     @Scheduled(fixedRate = 3600000)

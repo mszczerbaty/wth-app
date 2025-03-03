@@ -1,10 +1,11 @@
-package com.example.wth_app.service.webflux;
+package com.example.wth_app.service.webflux.impl;
 
 import com.example.wth_app.client.webflux.WebfluxWeatherClient;
 import com.example.wth_app.dto.WeatherResponse;
 import com.example.wth_app.dto.WeatherResponseDTO;
 import com.example.wth_app.model.WeatherData;
 import com.example.wth_app.repository.WeatherRepository;
+import com.example.wth_app.service.webflux.WebfluxWeatherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
@@ -14,7 +15,7 @@ import reactor.core.scheduler.Schedulers;
 
 @Service
 @RequiredArgsConstructor
-public class WebfluxWeatherServiceImpl {
+public class WebfluxWeatherServiceImpl implements WebfluxWeatherService {
     private final WebfluxWeatherClient weatherClient;
     private final WeatherRepository weatherRepository;
     private final TemplateEngine templateEngine;

@@ -16,7 +16,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class WebfluxWeatherSchedulerImpl {
-    private final WebfluxWeatherServiceImpl weatherService;
+    private final WebfluxWeatherService weatherService;
     private final WeatherSubscriptionService subscriptionService;
     private final EmailService emailService;
 
