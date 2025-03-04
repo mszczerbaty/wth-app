@@ -1,6 +1,7 @@
 package com.example.wth_app.client.web.impl;
 
 import com.example.wth_app.client.web.WeatherClient;
+import com.example.wth_app.dto.AirQualityResponse;
 import com.example.wth_app.dto.GeoLocation;
 import com.example.wth_app.dto.WeatherResponse;
 import com.example.wth_app.error.CityNotFoundException;
@@ -25,8 +26,9 @@ public class WeatherClientImpl implements WeatherClient {
     private String geoApiUrl;
     @Value("${weather.api.url}")
     private String weatherApiUrl;
+    @Value("${air-quality.api.url}")
+    private String airPollutionApiUrl;
     private final RestTemplate restTemplate;
-
 
     @Cacheable(value = "weather", key = "#city", unless = "#result == null")
     public WeatherResponse getWeather(String city, String apiKey) {
@@ -54,9 +56,21 @@ public class WeatherClientImpl implements WeatherClient {
                 .queryParam("units", "metric")
                 .queryParam("lang", lang)
                 .toUriString();
-        log.info("Retrieving weather data for city: {}", url);
+        log.info("Retrieving weather data: {}", url);
 
         return restTemplate.getForObject(url, WeatherResponse.class);
+    }
+
+    @Cacheable(value = "airQualityByCoords", key = "#longitude.toString() + #latitude.toString()", unless = "#result == null")
+    public AirQualityResponse getAirQuality(double latitude, double longitude) {
+        String url = UriComponentsBuilder.fromUriString(airPollutionApiUrl)
+                .queryParam("lat", latitude)
+                .queryParam("lon", longitude)
+                .queryParam("appid", apiKey)
+                .toUriString();
+        log.info("Retrieving air quality data: {}", url);
+
+        return restTemplate.getForObject(url, AirQualityResponse.class);
     }
 
     @Cacheable(value = "weatherByCity", key = "#city", unless = "#result == null")
