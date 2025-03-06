@@ -1,6 +1,7 @@
 package com.example.wth_app.service.web.impl;
 
 import com.example.wth_app.client.web.WeatherClient;
+import com.example.wth_app.dto.AirQualityResponse;
 import com.example.wth_app.dto.GeoLocation;
 import com.example.wth_app.dto.WeatherResponse;
 import com.example.wth_app.dto.WeatherResponseDTO;
@@ -25,7 +26,9 @@ public class WeatherServiceImpl implements WeatherService {
 
     public WeatherResponseDTO getWeatherByCity(String city, String lang) {
         GeoLocation geoLocation = weatherClient.getCoordinates(city);
-        return WeatherResponseDTO.from(getWeather(geoLocation.lat(), geoLocation.lon(), lang));
+        AirQualityResponse airQuality = weatherClient.getAirQuality(geoLocation.lat(), geoLocation.lon());
+        WeatherResponse weatherResponse = getWeather(geoLocation.lat(), geoLocation.lon(), lang);
+        return WeatherResponseDTO.from(weatherResponse, airQuality);
     }
 
     public void saveWeatherData(String city) {
@@ -65,6 +68,17 @@ public class WeatherServiceImpl implements WeatherService {
         context.setVariable("rainLastHour", weather.rainLastHour());
         context.setVariable("description", weather.description());
         context.setVariable("timestamp", weather.timestamp());
+
+        context.setVariable("airQualityIndex", weather.airQualityIndex());
+        context.setVariable("co", weather.co());
+        context.setVariable("no", weather.no());
+        context.setVariable("no2", weather.no2());
+        context.setVariable("o3", weather.o3());
+        context.setVariable("so2", weather.so2());
+        context.setVariable("pm2_5", weather.pm2_5());
+        context.setVariable("pm10", weather.pm10());
+        context.setVariable("nh3", weather.nh3());
+
         return templateEngine.process("weather-email", context);
     }
 

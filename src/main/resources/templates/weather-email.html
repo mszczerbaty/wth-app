@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather Status</title>
+    <title>Weather & Air Quality Status</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -25,18 +25,11 @@
             color: #3498db;
         }
 
-        .weather-info {
+        .weather-info, .air-quality {
             margin: 10px 0;
             padding: 10px;
             background: #ecf0f1;
             border-radius: 5px;
-        }
-
-        .footer {
-            font-size: 12px;
-            color: #777;
-            text-align: center;
-            margin-top: 20px;
         }
     </style>
 </head>
@@ -52,8 +45,22 @@
     <p>☁ Cloudiness: <strong th:text="${cloudiness} + '%'"></strong></p>
     <p>🌧 Rain (Last Hour): <strong th:text="${rainLastHour} != null ? ${rainLastHour} + ' mm' : 'No Rain'"></strong></p>
     <p>📝 Summary: <strong th:text="${description}"></strong></p>
+
+    <div class="air-quality">
+        <h2>🌍 Air Quality Index (AQI)</h2>
+        <p> AQI Level: <strong th:text="${airQualityIndex}"></strong></p>
+        <p>🔸 CO (Carbon Monoxide): <strong th:text="${co} + ' µg/m³'"></strong></p>
+        <p>🔸 NO (Nitric Oxide): <strong th:text="${no} + ' µg/m³'"></strong></p>
+        <p>🔸 NO₂ (Nitrogen Dioxide): <strong th:text="${no2} + ' µg/m³'"></strong></p>
+        <p>🔸 O₃ (Ozone): <strong th:text="${o3} + ' µg/m³'"></strong></p>
+        <p>🔸 SO₂ (Sulfur Dioxide): <strong th:text="${so2} + ' µg/m³'"></strong></p>
+        <p>🔸 PM2.5 (Fine Particles): <strong th:text="${pm2_5} + ' µg/m³'"></strong></p>
+        <p>🔸 PM10 (Coarse Particles): <strong th:text="${pm10} + ' µg/m³'"></strong></p>
+        <p>🔸 NH₃ (Ammonia): <strong th:text="${nh3} + ' µg/m³'"></strong></p>
+    </div>
+
     <div class="footer">
-        <p>Weather data provided by OpenWeather API</p>
+        <p>Weather & Air Quality data provided by OpenWeather API</p>
         <p>Sent at <span th:text="${timestamp}"></span></p>
     </div>
 </div>

@@ -1,6 +1,7 @@
 package com.example.wth_app.service.webflux.impl;
 
 import com.example.wth_app.client.webflux.WebfluxWeatherClient;
+import com.example.wth_app.dto.AirQualityResponse;
 import com.example.wth_app.dto.WeatherResponse;
 import com.example.wth_app.dto.WeatherResponseDTO;
 import com.example.wth_app.model.WeatherData;
@@ -26,8 +27,18 @@ public class WebfluxWeatherServiceImpl implements WebfluxWeatherService {
 
     public Mono<WeatherResponseDTO> getWeatherByCity(String city, String lang) {
         return weatherClient.getCoordinates(city)
-                .flatMap(geoLocation -> getWeather(geoLocation.lat(), geoLocation.lon(), lang))
-                .map(WeatherResponseDTO::from);
+                .flatMap(geoLocation -> {
+                    Mono<WeatherResponse> weatherMono = getWeather(geoLocation.lat(), geoLocation.lon(), lang);
+
+                    Mono<AirQualityResponse> airQualityMono = weatherClient.getAirQuality(geoLocation.lat(), geoLocation.lon());
+
+                    return weatherMono.zipWith(airQualityMono)
+                            .map(tuple -> {
+                                WeatherResponse weatherResponse = tuple.getT1();
+                                AirQualityResponse airQualityResponse = tuple.getT2();
+                                return WeatherResponseDTO.from(weatherResponse, airQualityResponse);
+                            });
+                });
     }
 
     public void saveWeatherData(String city) {

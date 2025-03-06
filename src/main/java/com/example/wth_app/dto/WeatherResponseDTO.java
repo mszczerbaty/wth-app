@@ -20,9 +20,21 @@ public record WeatherResponseDTO(
         Double windGust,
         int cloudiness,
         Double rainLastHour,
-        LocalDateTime timestamp
+        LocalDateTime timestamp,
+        Integer airQualityIndex,
+        Double co,
+        Double no,
+        Double no2,
+        Double o3,
+        Double so2,
+        Double pm2_5,
+        Double pm10,
+        Double nh3
 ) {
-    public static WeatherResponseDTO from(WeatherResponse response) {
+
+    public static WeatherResponseDTO from(WeatherResponse response, AirQualityResponse airQualityResponse) {
+        AirQualityResponse.AirQualityData airData = airQualityResponse.list().getFirst();
+
         return new WeatherResponseDTO(
                 response.name(),
                 response.sys().country(),
@@ -38,7 +50,16 @@ public record WeatherResponseDTO(
                 response.wind().gust(),
                 response.clouds().all(),
                 response.rain() != null ? response.rain().oneHour() : null,
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                airData.main().aqi(),
+                airData.components().co(),
+                airData.components().no(),
+                airData.components().no2(),
+                airData.components().o3(),
+                airData.components().so2(),
+                airData.components().pm2_5(),
+                airData.components().pm10(),
+                airData.components().nh3()
         );
     }
 

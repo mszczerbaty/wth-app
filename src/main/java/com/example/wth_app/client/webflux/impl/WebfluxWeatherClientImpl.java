@@ -1,6 +1,7 @@
 package com.example.wth_app.client.webflux.impl;
 
 import com.example.wth_app.client.webflux.WebfluxWeatherClient;
+import com.example.wth_app.dto.AirQualityResponse;
 import com.example.wth_app.dto.GeoLocation;
 import com.example.wth_app.dto.WeatherResponse;
 import com.example.wth_app.error.CityNotFoundException;
@@ -86,6 +87,30 @@ public class WebfluxWeatherClientImpl implements WebfluxWeatherClient {
                     } else {
                         return Mono.error(new CityNotFoundException("City not found: " + city));
                     }
+                });
+    }
+
+    @Cacheable(value = "weatherByCoords", key = "#longitude.toString() + #latitude.toString()", unless = "#result == null")
+    public Mono<AirQualityResponse> getAirQuality(double latitude, double longitude) {
+        String url = UriComponentsBuilder.fromUriString(weatherApiUrl)
+                .queryParam("lat", latitude)
+                .queryParam("lon", longitude)
+                .queryParam("appid", apiKey)
+                .toUriString();
+
+        log.info("Retrieving ait quality data for coordinates: {}, {}", latitude, longitude);
+
+        return webClient.get()
+                .uri(url)
+                .retrieve()
+                .bodyToMono(AirQualityResponse.class)
+                .onErrorResume(WebClientResponseException.NotFound.class, e -> {
+                    log.error("Weather data not found for coordinates: {}, {}", latitude, longitude);
+                    return Mono.empty();
+                })
+                .onErrorResume(WebClientResponseException.class, e -> {
+                    log.error("Error fetching weather data: {}", e.getMessage());
+                    return Mono.error(new ExternalServiceException("Weather service unavailable"));
                 });
     }
 }

@@ -38,20 +38,20 @@ public record WeatherResponse(
             @JsonProperty("temp_max") double tempMax,
             @JsonProperty("pressure") int pressure,
             @JsonProperty("humidity") int humidity,
-            @JsonProperty("sea_level") Integer seaLevel, // Może być null
-            @JsonProperty("grnd_level") Integer groundLevel // Może być null
+            @JsonProperty("sea_level") Integer seaLevel,
+            @JsonProperty("grnd_level") Integer groundLevel
     ) {
     }
 
     public record Wind(
             @JsonProperty("speed") double speed,
             @JsonProperty("deg") int deg,
-            @JsonProperty("gust") Double gust // Może być null
+            @JsonProperty("gust") Double gust
     ) {
     }
 
     public record Rain(
-            @JsonProperty("1h") Double oneHour // Może być null, więc Double
+            @JsonProperty("1h") Double oneHour
     ) {
     }
 
