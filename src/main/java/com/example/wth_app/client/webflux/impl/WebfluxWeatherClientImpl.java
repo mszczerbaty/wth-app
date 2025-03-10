@@ -27,10 +27,12 @@ public class WebfluxWeatherClientImpl implements WebfluxWeatherClient {
     private String geoApiUrl;
     @Value("${weather.api.url}")
     private String weatherApiUrl;
+    @Value("${air-quality.api.url}")
+    private String airPollutionApiUrl;
     private final WebClient webClient;
 
 
-    @Cacheable(value = "weather", key = "#city", unless = "#result == null")
+    @Cacheable(value = "monoWeather", key = "#city", unless = "#result == null")
     public Mono<WeatherResponse> getWeather(String city, String apiKey) {
         log.info("Retrieving weather data for city: {}", city);
         return webClient.get()
@@ -43,7 +45,7 @@ public class WebfluxWeatherClientImpl implements WebfluxWeatherClient {
                 .bodyToMono(WeatherResponse.class);
     }
 
-    @Cacheable(value = "weatherByCoords", key = "#longitude.toString() + #latitude.toString()", unless = "#result == null")
+    @Cacheable(value = "monoWeatherByCoords", key = "#longitude.toString() + #latitude.toString()", unless = "#result == null")
     public Mono<WeatherResponse> getWeather(double latitude, double longitude, String lang) {
         String url = UriComponentsBuilder.fromUriString(weatherApiUrl)
                 .queryParam("lat", latitude)
@@ -69,7 +71,7 @@ public class WebfluxWeatherClientImpl implements WebfluxWeatherClient {
                 });
     }
 
-    @Cacheable(value = "weatherByCity", key = "#city", unless = "#result == null")
+    @Cacheable(value = "monoWeatherByCity", key = "#city", unless = "#result == null")
     public Mono<GeoLocation> getCoordinates(String city) {
         String url = UriComponentsBuilder.fromUriString(geoApiUrl)
                 .queryParam("q", city)
@@ -90,9 +92,9 @@ public class WebfluxWeatherClientImpl implements WebfluxWeatherClient {
                 });
     }
 
-    @Cacheable(value = "weatherByCoords", key = "#longitude.toString() + #latitude.toString()", unless = "#result == null")
+    @Cacheable(value = "monoWeatherByCoords", key = "#longitude.toString() + #latitude.toString()", unless = "#result == null")
     public Mono<AirQualityResponse> getAirQuality(double latitude, double longitude) {
-        String url = UriComponentsBuilder.fromUriString(weatherApiUrl)
+        String url = UriComponentsBuilder.fromUriString(airPollutionApiUrl)
                 .queryParam("lat", latitude)
                 .queryParam("lon", longitude)
                 .queryParam("appid", apiKey)
