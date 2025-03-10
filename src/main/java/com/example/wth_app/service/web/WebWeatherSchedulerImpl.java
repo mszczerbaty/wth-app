@@ -14,14 +14,14 @@ import java.util.List;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class WeatherSchedulerImpl {
-    private final WeatherService weatherService;
+public class WebWeatherSchedulerImpl {
+    private final WebWeatherService weatherService;
     private final WeatherSubscriptionService subscriptionService;
 
     @Scheduled(fixedRate = 3600000)
     public void fetchAndStoreWeather() {
         log.info("Fetching weather data {}", LocalDateTime.now());
-        weatherService.saveWeatherData("Warsaw");
+        weatherService.getAndSaveWeatherData("Warsaw");
     }
 
     @Scheduled(cron = "0 0 * * * *")
@@ -29,7 +29,7 @@ public class WeatherSchedulerImpl {
         List<WeatherSubscription> subscriptions = subscriptionService.getAllSubscriptions();
 
         for (WeatherSubscription sub : subscriptions) {
-            String weatherReport = weatherService.getWeatherReport(sub.getCity());
+            String weatherReport = weatherService.getHtmlWeatherByCity(sub.getCity(), "en");
             String subject = "Weather Update for " + sub.getCity();
             log.info("{}\n{}", weatherReport, subject);
         }

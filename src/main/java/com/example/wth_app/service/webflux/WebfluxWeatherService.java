@@ -9,9 +9,7 @@ public interface WebfluxWeatherService {
 
     Mono<WeatherResponseDTO> getWeatherByCity(String city, String lang);
 
-    void saveWeatherData(String city);
-
-    Mono<String> getWeatherReport(String city);
+    void getAndSaveWeatherData(String city);
 
     Mono<String> getHtmlWeatherByCity(String city, String lang);
 }

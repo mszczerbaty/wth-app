@@ -23,17 +23,17 @@ public class WebfluxWeatherSchedulerImpl {
     @Scheduled(fixedRate = 3600000)
     public void fetchAndStoreWeather() {
         log.info("Fetching weather data {}", LocalDateTime.now());
-        weatherService.saveWeatherData("Warsaw");
+        weatherService.getAndSaveWeatherData("Warsaw");
     }
 
-    @Scheduled(cron = "0 0 * * * *")
+    @Scheduled(cron = "0 30 * * * *")
     public void sendWeatherEmails() {
         List<WeatherSubscription> subscriptions = subscriptionService.getAllSubscriptions();
 
         subscriptions.forEach(sub -> {
             String subject = "Weather Update for " + sub.getCity();
 
-            weatherService.getWeatherReport(sub.getCity())
+            weatherService.getHtmlWeatherByCity(sub.getCity(), "en")
                     .doOnNext(report -> {
                         log.info("{}\n{}", report, subject);
                         emailService.sendWeatherEmail(sub.getEmail(), subject, report);
