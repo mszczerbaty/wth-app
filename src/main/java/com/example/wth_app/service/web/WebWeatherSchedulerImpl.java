@@ -2,6 +2,7 @@ package com.example.wth_app.service.web;
 
 
 import com.example.wth_app.model.WeatherSubscription;
+import com.example.wth_app.service.EmailService;
 import com.example.wth_app.service.WeatherSubscriptionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ import java.util.List;
 public class WebWeatherSchedulerImpl {
     private final WebWeatherService weatherService;
     private final WeatherSubscriptionService subscriptionService;
+    private final EmailService emailService;
 
     @Scheduled(fixedRate = 3600000)
     public void fetchAndStoreWeather() {
@@ -24,7 +26,7 @@ public class WebWeatherSchedulerImpl {
         weatherService.getAndSaveWeatherData("Warsaw");
     }
 
-    @Scheduled(cron = "0 0 * * * *")
+    @Scheduled(cron = "0 0 8-18 * * *")
     public void sendWeatherEmails() {
         List<WeatherSubscription> subscriptions = subscriptionService.getAllSubscriptions();
 
@@ -32,6 +34,7 @@ public class WebWeatherSchedulerImpl {
             String weatherReport = weatherService.getHtmlWeatherByCity(sub.getCity(), "en");
             String subject = "Weather Update for " + sub.getCity();
             log.info("{}\n{}", weatherReport, subject);
+            emailService.sendWeatherEmail(sub.getEmail(), subject, weatherReport);
         }
     }
 

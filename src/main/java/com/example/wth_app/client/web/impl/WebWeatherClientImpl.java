@@ -1,6 +1,6 @@
 package com.example.wth_app.client.web.impl;
 
-import com.example.wth_app.client.web.WeatherClient;
+import com.example.wth_app.client.web.WebWeatherClient;
 import com.example.wth_app.dto.AirQualityResponse;
 import com.example.wth_app.dto.GeoLocation;
 import com.example.wth_app.dto.WeatherResponse;
@@ -19,7 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class WeatherClientImpl implements WeatherClient {
+public class WebWeatherClientImpl implements WebWeatherClient {
     @Value("${weather.api.key}")
     private String apiKey;
     @Value("${geo.api.url}")

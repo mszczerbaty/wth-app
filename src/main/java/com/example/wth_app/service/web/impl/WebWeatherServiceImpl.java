@@ -1,6 +1,6 @@
 package com.example.wth_app.service.web.impl;
 
-import com.example.wth_app.client.web.WeatherClient;
+import com.example.wth_app.client.web.WebWeatherClient;
 import com.example.wth_app.dto.AirQualityResponse;
 import com.example.wth_app.dto.GeoLocation;
 import com.example.wth_app.dto.WeatherResponse;
@@ -14,9 +14,9 @@ import org.thymeleaf.TemplateEngine;
 
 @Service
 public class WebWeatherServiceImpl extends AbstractWeatherService implements WebWeatherService {
-    private final WeatherClient weatherClient;
+    private final WebWeatherClient weatherClient;
 
-    public WebWeatherServiceImpl(WeatherClient weatherClient, WeatherRepository weatherRepository, TemplateEngine templateEngine) {
+    public WebWeatherServiceImpl(WebWeatherClient weatherClient, WeatherRepository weatherRepository, TemplateEngine templateEngine) {
         super(templateEngine, weatherRepository);
         this.weatherClient = weatherClient;
     }
