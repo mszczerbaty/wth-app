@@ -32,7 +32,7 @@ public class WebWeatherServiceImpl extends AbstractWeatherService implements Web
         return WeatherResponseDTO.from(weatherResponse, airQuality);
     }
 
-    public void getAndSaveWeatherData(String city) {
+    public void getAndSaveWeatherDataByCity(String city) {
         WeatherResponseDTO weather = getWeatherByCity(city, "en");
         WeatherData weatherData = new WeatherData(
                 city,
@@ -43,9 +43,9 @@ public class WebWeatherServiceImpl extends AbstractWeatherService implements Web
         weatherRepository.save(weatherData);
     }
 
-    public String getHtmlWeatherByCity(String city, String lang) {
+    public String getWeatherHtmlPageByCity(String city, String lang) {
         WeatherResponseDTO weatherResponseDTO = getWeatherByCity(city, lang);
-        return createWeatherHtmlResponse(weatherResponseDTO);
+        return createWeatherPageHtmlResponse(weatherResponseDTO);
     }
 
 }

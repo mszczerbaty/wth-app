@@ -8,7 +8,7 @@ public interface WebWeatherService {
 
     WeatherResponseDTO getWeatherByCity(String city, String lang);
 
-    void getAndSaveWeatherData(String city);
+    void getAndSaveWeatherDataByCity(String city);
 
-    String getHtmlWeatherByCity(String city, String lang);
+    String getWeatherHtmlPageByCity(String city, String lang);
 }

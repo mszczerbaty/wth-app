@@ -21,9 +21,10 @@ public class WebWeatherSchedulerImpl {
     private final EmailService emailService;
 
     @Scheduled(fixedRate = 3600000)
-    public void fetchAndStoreWeather() {
+    public void fetchAndStoreWeatherForAllSubscribedCities() {
         log.info("Fetching weather data {}", LocalDateTime.now());
-        weatherService.getAndSaveWeatherData("Warsaw");
+        List<WeatherSubscription> subscriptions = subscriptionService.getAllSubscriptions();
+        subscriptions.forEach(subscription -> weatherService.getAndSaveWeatherDataByCity(subscription.getCity()));
     }
 
     @Scheduled(cron = "0 0 8-18 * * *")
@@ -31,7 +32,7 @@ public class WebWeatherSchedulerImpl {
         List<WeatherSubscription> subscriptions = subscriptionService.getAllSubscriptions();
 
         for (WeatherSubscription sub : subscriptions) {
-            String weatherReport = weatherService.getHtmlWeatherByCity(sub.getCity(), "en");
+            String weatherReport = weatherService.getWeatherHtmlPageByCity(sub.getCity(), "en");
             String subject = "Weather Update for " + sub.getCity();
             log.info("{}\n{}", weatherReport, subject);
             emailService.sendWeatherEmail(sub.getEmail(), subject, weatherReport);

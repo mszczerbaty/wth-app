@@ -14,9 +14,9 @@ public abstract class AbstractWeatherService {
         this.weatherRepository = weatherRepository;
     }
 
-    public abstract void getAndSaveWeatherData(String city);
+    public abstract void getAndSaveWeatherDataByCity(String city);
 
-    protected String createWeatherHtmlResponse(WeatherResponseDTO weather) {
+    protected String createWeatherPageHtmlResponse(WeatherResponseDTO weather) {
         Context context = new Context();
         context.setVariable("city", weather.city());
         context.setVariable("country", weather.country());
@@ -40,6 +40,6 @@ public abstract class AbstractWeatherService {
         context.setVariable("pm10", weather.pm10());
         context.setVariable("nh3", weather.nh3());
 
-        return templateEngine.process("weather-email", context);
+        return templateEngine.process("weather-page", context);
     }
 }

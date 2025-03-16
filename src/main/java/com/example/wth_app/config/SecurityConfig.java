@@ -24,7 +24,7 @@ public class SecurityConfig {
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/weather/status-by-city?city=Warsaw", true)
+                        .defaultSuccessUrl("/weather/city?city=Warsaw", true)
                         .permitAll()
                 )
                 .logout(logout -> logout

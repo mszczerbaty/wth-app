@@ -42,7 +42,7 @@ public class WebfluxWeatherServiceImpl extends AbstractWeatherService implements
                 });
     }
 
-    public void getAndSaveWeatherData(String city) {
+    public void getAndSaveWeatherDataByCity(String city) {
         getWeatherByCity(city, "en")
                 .publishOn(Schedulers.boundedElastic())
                 .doOnSuccess(weatherResponseDTO -> weatherRepository.save(new WeatherData(
@@ -56,7 +56,7 @@ public class WebfluxWeatherServiceImpl extends AbstractWeatherService implements
 
     public Mono<String> getHtmlWeatherByCity(String city, String lang) {
         return getWeatherByCity(city, lang)
-                .map(this::createWeatherHtmlResponse);
+                .map(this::createWeatherPageHtmlResponse);
     }
 
 }

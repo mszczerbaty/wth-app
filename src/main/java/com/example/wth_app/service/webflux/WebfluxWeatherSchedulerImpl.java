@@ -23,7 +23,8 @@ public class WebfluxWeatherSchedulerImpl {
     @Scheduled(fixedRate = 3600000)
     public void fetchAndStoreWeather() {
         log.info("Fetching weather data {}", LocalDateTime.now());
-        weatherService.getAndSaveWeatherData("Warsaw");
+        List<WeatherSubscription> subscriptions = subscriptionService.getAllSubscriptions();
+        subscriptions.forEach(subscription -> weatherService.getAndSaveWeatherDataByCity(subscription.getCity()));
     }
 
     @Scheduled(cron = "0 30 8-18 * * *")
