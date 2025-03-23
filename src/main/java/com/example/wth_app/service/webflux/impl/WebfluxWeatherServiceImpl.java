@@ -1,9 +1,9 @@
 package com.example.wth_app.service.webflux.impl;
 
 import com.example.wth_app.client.webflux.WebfluxWeatherClient;
-import com.example.wth_app.dto.AirQualityResponse;
-import com.example.wth_app.dto.WeatherResponse;
-import com.example.wth_app.dto.WeatherResponseDTO;
+import com.example.wth_app.model.dto.AirQualityResponse;
+import com.example.wth_app.model.dto.WeatherResponse;
+import com.example.wth_app.model.dto.WeatherResponseDTO;
 import com.example.wth_app.model.WeatherData;
 import com.example.wth_app.repository.WeatherRepository;
 import com.example.wth_app.service.impl.AbstractWeatherService;

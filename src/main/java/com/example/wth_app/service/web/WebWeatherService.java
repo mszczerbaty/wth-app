@@ -1,7 +1,7 @@
 package com.example.wth_app.service.web;
 
-import com.example.wth_app.dto.WeatherResponse;
-import com.example.wth_app.dto.WeatherResponseDTO;
+import com.example.wth_app.model.dto.WeatherResponse;
+import com.example.wth_app.model.dto.WeatherResponseDTO;
 
 public interface WebWeatherService {
     WeatherResponse getWeather(double latitude, double longitude, String lang);

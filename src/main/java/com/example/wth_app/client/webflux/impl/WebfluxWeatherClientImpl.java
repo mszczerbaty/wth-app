@@ -1,9 +1,9 @@
 package com.example.wth_app.client.webflux.impl;
 
 import com.example.wth_app.client.webflux.WebfluxWeatherClient;
-import com.example.wth_app.dto.AirQualityResponse;
-import com.example.wth_app.dto.GeoLocation;
-import com.example.wth_app.dto.WeatherResponse;
+import com.example.wth_app.model.dto.AirQualityResponse;
+import com.example.wth_app.model.dto.GeoLocation;
+import com.example.wth_app.model.dto.WeatherResponse;
 import com.example.wth_app.error.CityNotFoundException;
 import com.example.wth_app.error.ExternalServiceException;
 import lombok.RequiredArgsConstructor;

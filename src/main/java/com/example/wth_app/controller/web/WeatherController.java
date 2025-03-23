@@ -1,6 +1,6 @@
 package com.example.wth_app.controller.web;
 
-import com.example.wth_app.dto.WeatherResponseDTO;
+import com.example.wth_app.model.dto.WeatherResponseDTO;
 import com.example.wth_app.service.web.WebWeatherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

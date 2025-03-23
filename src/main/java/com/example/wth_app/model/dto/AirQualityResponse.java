@@ -1,4 +1,4 @@
-package com.example.wth_app.dto;
+package com.example.wth_app.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

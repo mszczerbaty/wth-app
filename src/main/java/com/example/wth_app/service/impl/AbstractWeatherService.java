@@ -1,6 +1,6 @@
 package com.example.wth_app.service.impl;
 
-import com.example.wth_app.dto.WeatherResponseDTO;
+import com.example.wth_app.model.dto.WeatherResponseDTO;
 import com.example.wth_app.repository.WeatherRepository;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;

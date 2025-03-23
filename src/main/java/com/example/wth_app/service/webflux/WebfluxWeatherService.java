@@ -1,7 +1,7 @@
 package com.example.wth_app.service.webflux;
 
-import com.example.wth_app.dto.WeatherResponse;
-import com.example.wth_app.dto.WeatherResponseDTO;
+import com.example.wth_app.model.dto.WeatherResponse;
+import com.example.wth_app.model.dto.WeatherResponseDTO;
 import reactor.core.publisher.Mono;
 
 public interface WebfluxWeatherService {

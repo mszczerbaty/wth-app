@@ -1,8 +1,8 @@
 package com.example.wth_app.client.webflux;
 
-import com.example.wth_app.dto.AirQualityResponse;
-import com.example.wth_app.dto.GeoLocation;
-import com.example.wth_app.dto.WeatherResponse;
+import com.example.wth_app.model.dto.AirQualityResponse;
+import com.example.wth_app.model.dto.GeoLocation;
+import com.example.wth_app.model.dto.WeatherResponse;
 import reactor.core.publisher.Mono;
 
 public interface WebfluxWeatherClient {
