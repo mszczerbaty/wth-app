@@ -8,21 +8,7 @@
 </head>
 <body>
 <div class="container">
-    <div class="search-box">
-        <form action="/weather/city" method="get">
-            <label>Search city: </label>
-            <label>
-                <input type="text" name="city" placeholder="Enter city name" required>
-            </label>
-            <button type="submit">Search</button>
-        </form>
-    </div>
     <div th:replace="~{fragments/weather-info :: weatherInfo}"></div>
-    <div class="logout">
-        <form action="/logout" method="post">
-            <button type="submit" class="logout-button">Logout</button>
-        </form>
-    </div>
     <div class="footer">
         <p>Weather & Air Quality data provided by OpenWeather API</p>
         <p>Sent at <span th:text="${timestamp}"></span></p>

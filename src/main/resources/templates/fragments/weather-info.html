@@ -1,0 +1,25 @@
+<div th:fragment="weatherInfo">
+    <h2 class="weather-info">🌦 Weather in <span th:text="${city}"></span></h2>
+    <p>📍 Location: <strong th:text="${city} + ', ' + ${country}"></strong></p>
+    <p>🌡 Temperature: <strong th:text="${temperature} + '°C'"></strong> (Feels like <span
+            th:text="${feelsLike} + '°C'"></span>)</p>
+    <p>💧 Humidity: <strong th:text="${humidity} + '%'"></strong></p>
+    <p>🌬 Wind: <strong th:text="${windSpeed} + ' m/s'"></strong>, Direction: <strong
+            th:text="${windDirection}"></strong></p>
+    <p>☁ Cloudiness: <strong th:text="${cloudiness} + '%'"></strong></p>
+    <p>🌧 Rain (Last Hour): <strong th:text="${rainLastHour} != null ? ${rainLastHour} + ' mm' : 'No Rain'"></strong></p>
+    <p>📝 Summary: <strong th:text="${description}"></strong></p>
+
+    <div class="air-quality">
+        <h2>🌍 Air Quality Index (AQI)</h2>
+        <p> AQI Level: <strong th:text="${airQualityIndex}"></strong></p>
+        <p>🔸 CO (Carbon Monoxide): <strong th:text="${co} + ' µg/m³'"></strong></p>
+        <p>🔸 NO (Nitric Oxide): <strong th:text="${no} + ' µg/m³'"></strong></p>
+        <p>🔸 NO₂ (Nitrogen Dioxide): <strong th:text="${no2} + ' µg/m³'"></strong></p>
+        <p>🔸 O₃ (Ozone): <strong th:text="${o3} + ' µg/m³'"></strong></p>
+        <p>🔸 SO₂ (Sulfur Dioxide): <strong th:text="${so2} + ' µg/m³'"></strong></p>
+        <p>🔸 PM2.5 (Fine Particles): <strong th:text="${pm2_5} + ' µg/m³'"></strong></p>
+        <p>🔸 PM10 (Coarse Particles): <strong th:text="${pm10} + ' µg/m³'"></strong></p>
+        <p>🔸 NH₃ (Ammonia): <strong th:text="${nh3} + ' µg/m³'"></strong></p>
+    </div>
+</div>

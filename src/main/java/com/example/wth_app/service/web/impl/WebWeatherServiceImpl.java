@@ -39,11 +39,7 @@ public class WebWeatherServiceImpl extends AbstractWeatherService implements Web
     }
 
     public WeatherResponseDTO getWeatherByCity(String city, String lang) {
-        String cityFormattedForRequest = city.replaceAll(" ", "-");
-        GeoLocation geoLocation = weatherClient.getCoordinates(cityFormattedForRequest);
-        AirQualityResponse airQuality = weatherClient.getAirQuality(geoLocation.lat(), geoLocation.lon());
-        WeatherResponse weatherResponse = getWeather(geoLocation.lat(), geoLocation.lon(), lang);
-        WeatherResponseDTO weatherResponseDTO = WeatherResponseDTO.from(weatherResponse, airQuality);
+        WeatherResponseDTO weatherResponseDTO = getWeatherResponseDTO(city, lang);
         User user = getCurrentUser();
         WeatherRequest weatherRequest = WeatherRequestMapper.INSTANCE.weatherResponseDTOWithUserToWeatherRequest(weatherResponseDTO, user);
         weatherRequestRepository.save(weatherRequest);
@@ -62,8 +58,16 @@ public class WebWeatherServiceImpl extends AbstractWeatherService implements Web
     }
 
     public String getWeatherHtmlPageByCity(String city, String lang) {
-        WeatherResponseDTO weatherResponseDTO = getWeatherByCity(city, lang);
+        WeatherResponseDTO weatherResponseDTO = getWeatherResponseDTO(city, lang);
         return createWeatherPageHtmlResponse(weatherResponseDTO);
+    }
+
+    private WeatherResponseDTO getWeatherResponseDTO(String city, String lang) {
+        String cityFormattedForRequest = city.replaceAll(" ", "-");
+        GeoLocation geoLocation = weatherClient.getCoordinates(cityFormattedForRequest);
+        AirQualityResponse airQuality = weatherClient.getAirQuality(geoLocation.lat(), geoLocation.lon());
+        WeatherResponse weatherResponse = getWeather(geoLocation.lat(), geoLocation.lon(), lang);
+        return WeatherResponseDTO.from(weatherResponse, airQuality);
     }
 
     private User getCurrentUser() {

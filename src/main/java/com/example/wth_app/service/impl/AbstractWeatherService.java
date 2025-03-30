@@ -40,6 +40,6 @@ public abstract class AbstractWeatherService {
         context.setVariable("pm10", weather.pm10());
         context.setVariable("nh3", weather.nh3());
 
-        return templateEngine.process("weather-page", context);
+        return templateEngine.process("weather-mail", context);
     }
 }
