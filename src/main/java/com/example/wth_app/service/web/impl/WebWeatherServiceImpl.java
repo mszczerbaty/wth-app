@@ -39,7 +39,8 @@ public class WebWeatherServiceImpl extends AbstractWeatherService implements Web
     }
 
     public WeatherResponseDTO getWeatherByCity(String city, String lang) {
-        GeoLocation geoLocation = weatherClient.getCoordinates(city);
+        String cityFormattedForRequest = city.replaceAll(" ", "-");
+        GeoLocation geoLocation = weatherClient.getCoordinates(cityFormattedForRequest);
         AirQualityResponse airQuality = weatherClient.getAirQuality(geoLocation.lat(), geoLocation.lon());
         WeatherResponse weatherResponse = getWeather(geoLocation.lat(), geoLocation.lon(), lang);
         WeatherResponseDTO weatherResponseDTO = WeatherResponseDTO.from(weatherResponse, airQuality);

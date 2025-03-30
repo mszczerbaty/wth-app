@@ -38,11 +38,48 @@
             text-align: center;
             margin-top: 20px;
         }
+
+        .search-box {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            padding: 6px;
+            width: 200px;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        .search-box button {
+            padding: 8px 15px;
+            font-size: 16px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .search-box button:hover {
+            background-color: #2980b9;
+        }
     </style>
 </head>
 <body>
+
 <div class="container">
-    <h2 class="weather-info">🌦 Weather status for <span th:text="${city}"></span></h2>
+    <div class="search-box">
+        <form action="/weather/city" method="get">
+            <label>Search city: </label>
+            <label>
+                <input type="text" name="city" placeholder="Enter city name" required>
+            </label>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <h2 class="weather-info">🌦 Weather in <span th:text="${city}"></span></h2>
     <p>📍 Location: <strong th:text="${city} + ', ' + ${country}"></strong></p>
     <p>🌡 Temperature: <strong th:text="${temperature} + '°C'"></strong> (Feels like <span
             th:text="${feelsLike} + '°C'"></span>)</p>
