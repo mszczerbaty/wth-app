@@ -1,13 +1,14 @@
 package com.example.wth_app.service.web.impl;
 
 import com.example.wth_app.client.web.WebWeatherClient;
+import com.example.wth_app.model.User;
+import com.example.wth_app.model.WeatherData;
+import com.example.wth_app.model.WeatherRequest;
 import com.example.wth_app.model.dto.AirQualityResponse;
 import com.example.wth_app.model.dto.GeoLocation;
 import com.example.wth_app.model.dto.WeatherResponse;
 import com.example.wth_app.model.dto.WeatherResponseDTO;
-import com.example.wth_app.model.User;
-import com.example.wth_app.model.WeatherData;
-import com.example.wth_app.model.WeatherRequest;
+import com.example.wth_app.model.mapper.WeatherRequestMapper;
 import com.example.wth_app.repository.UserRepository;
 import com.example.wth_app.repository.WeatherRepository;
 import com.example.wth_app.repository.WeatherRequestRepository;
@@ -19,7 +20,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 
-import static com.example.wth_app.model.mapper.WeatherRequestMapper.mapDtoToEntity;
 
 @Service
 public class WebWeatherServiceImpl extends AbstractWeatherService implements WebWeatherService {
@@ -44,7 +44,7 @@ public class WebWeatherServiceImpl extends AbstractWeatherService implements Web
         WeatherResponse weatherResponse = getWeather(geoLocation.lat(), geoLocation.lon(), lang);
         WeatherResponseDTO weatherResponseDTO = WeatherResponseDTO.from(weatherResponse, airQuality);
         User user = getCurrentUser();
-        WeatherRequest weatherRequest = mapDtoToEntity(weatherResponseDTO, user);
+        WeatherRequest weatherRequest = WeatherRequestMapper.INSTANCE.weatherResponseDTOWithUserToWeatherRequest(weatherResponseDTO, user);
         weatherRequestRepository.save(weatherRequest);
         return weatherResponseDTO;
     }
