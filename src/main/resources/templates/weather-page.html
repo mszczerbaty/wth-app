@@ -18,6 +18,9 @@
         </form>
     </div>
     <div th:replace="~{fragments/weather-info :: weatherInfo}"></div>
+    <div class="subscribe-redirect">
+        <a href="/email/subscribe" class="subscribe-link-button">📬 Go to Subscription Page</a>
+    </div>
     <div class="logout">
         <form action="/logout" method="post">
             <button type="submit" class="logout-button">Logout</button>

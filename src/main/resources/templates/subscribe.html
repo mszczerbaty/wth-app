@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Subscribe to Weather Reports</title>
+  <link rel="stylesheet" href="/css/subscribe.css">
+</head>
+<body>
+<div class="container">
+  <h2>📬 Subscribe to Daily Weather Reports</h2>
+  <form action="/email/subscribe" method="post" class="subscription-form">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+    <label for="city">City:</label>
+    <input type="text" id="city" name="city" placeholder="Enter city name" required>
+
+    <button type="submit" class="subscribe-button">Subscribe</button>
+  </form>
+
+  <form action="/email/unsubscribe" method="post" class="subscription-form">
+    <h3>Unsubscribe</h3>
+    <label for="email-unsub">Email:</label>
+    <input type="email" id="email-unsub" name="email" placeholder="Enter your email" required>
+
+    <label for="city-unsub">City:</label>
+    <input type="text" id="city-unsub" name="city" placeholder="Enter city name" required>
+
+    <button type="submit" class="unsubscribe-button">Unsubscribe</button>
+  </form>
+
+  <div class="back-to-weather">
+    <a href="/weather/city?city=Warszawa" class="back-button">← Back to Weather Page</a>
+  </div>
+</div>
+</body>
+</html>

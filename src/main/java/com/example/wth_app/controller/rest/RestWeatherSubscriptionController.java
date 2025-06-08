@@ -1,4 +1,4 @@
-package com.example.wth_app.controller;
+package com.example.wth_app.controller.rest;
 
 import com.example.wth_app.service.WeatherSubscriptionService;
 import lombok.RequiredArgsConstructor;
@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/email")
+@RequestMapping(path = "/email/v1")
 @RequiredArgsConstructor
-public class WeatherSubscriptionController {
+public class RestWeatherSubscriptionController {
     private final WeatherSubscriptionService subscriptionService;
 
     @PostMapping("/subscribe")
